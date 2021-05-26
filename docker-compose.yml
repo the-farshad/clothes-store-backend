@@ -11,7 +11,7 @@ services:
       - MYSQL_HOST=mySQL-host
       - MYSQL_USER=mySQL-username
       - MYSQL_PASS=mySQL-password
-      - MYSQL_DB=mySQL_db
+      - MYSQL_DB=shopping_store
     volumes:
       - ./www/:/var/www/html/
     ports:
@@ -25,7 +25,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=mySQL-username
       - MYSQL_PASSWORD=mySQL-password
-      - MYSQL_DATABASE=mySQL_db
+      - MYSQL_DATABASE=shopping_store
     container_name: mySQL-host
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.0

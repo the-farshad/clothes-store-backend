@@ -11,8 +11,7 @@ app.get('/',function(req,res){
    var mysqlPort = process.env.MYSQL_PORT || '3306';
    var mysqlUser = process.env.MYSQL_USER || 'mySQL-username';
    var mysqlPass = process.env.MYSQL_PASS || 'SQL-password';
-   var mysqlDB   = process.env.MYSQL_DB   || 'mySQL_db';
-   console.log(mysqlHost ,mysqlPort, mysqlUser, mysqlPass, mysqlDB)
+   var mysqlDB   = process.env.MYSQL_DB   || 'shopping_store';
 
    var connectionOptions = {
      host: mysqlHost,
