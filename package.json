@@ -1,0 +1,32 @@
+{
+  "name": "clothes-store-backend",
+  "version": "1.0.0",
+  "description": "That's a backend of clothes store",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-farshad/clothes-store-backend.git"
+  },
+  "keywords": [
+    "clothes;",
+    "store;",
+    "shopping"
+  ],
+  "author": "Farshad",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/the-farshad/clothes-store-backend/issues"
+  },
+  "homepage": "https://github.com/the-farshad/clothes-store-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
