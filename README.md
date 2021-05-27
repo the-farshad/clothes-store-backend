@@ -1,4 +1,9 @@
 # clothes-store-backend
+## 0
+
+- At first run that command in terminal
+``` git clone https://github.com/the-farshad/clothes-store-backend.git && cd clothes-store-backend ``` 
+
 
 Build the docker image form the Docker file with the below command:
 
