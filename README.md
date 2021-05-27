@@ -45,7 +45,8 @@ CREATE DATABASE shopping_store;
 -- Table structure for table `stores`
 
 CREATE TABLE `shopping_store`.`stores`(
-    `id` BIGINT NOT NULL,
+    `id` BIGINT NOT NULL AUTO_INCREMENT,
+    `uuid` VARCHAR(36) NOT NULL,
     `storeName` VARCHAR(30) NOT NULL,
     `imageUrl` VARCHAR(2083),
     `metaTitle` VARCHAR(100) NULL,
@@ -55,7 +56,7 @@ CREATE TABLE `shopping_store`.`stores`(
     `city` INT(50),
     `state` INT(50),
     `zipCode` INT(10),
-    `phone` INT(15) NOT NULL,
+    `phone` VARCHAR(15) NOT NULL,
     `email` INT(50),
     `status` BOOLEAN NOT NULL DEFAULT TRUE,
     `joinedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -73,13 +74,15 @@ CREATE TABLE `shopping_store`.`stores`(
 
 CREATE TABLE `shopping_store`.`product` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `uuid` VARCHAR(36) NOT NULL,
   `storeId` BIGINT NOT NULL,
   `title` VARCHAR(75) NOT NULL,
+  `imageUrl` VARCHAR(2083),
   `metaTitle` VARCHAR(100) NULL,
   `slug` VARCHAR(100) NOT NULL,
   `summary` TINYTEXT NULL,
   `type` SMALLINT(6) NOT NULL DEFAULT 0,
-  `sku` VARCHAR(100) NOT NULL,
+  `sku` VARCHAR(100) NOT NULL DEFAULT 0,
   `price` FLOAT NOT NULL DEFAULT 0,
   `currency` VARCHAR(3) NOT NULL DEFAULT 'iqd',
   `discount` FLOAT NOT NULL DEFAULT 0,
@@ -93,6 +96,7 @@ CREATE TABLE `shopping_store`.`product` (
   `content` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `uq_slug` (`slug` ASC),
+  ADD UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC) VISIBLE,
   INDEX `idx_product_shop` (`storeId` ASC),
   CONSTRAINT `fk_product_user`
     FOREIGN KEY (`storeId`)
@@ -105,12 +109,15 @@ CREATE TABLE `shopping_store`.`product` (
 
 CREATE TABLE `shopping_store`.`category`(
     `id` BIGINT NOT NULL AUTO_INCREMENT,
+    `uuid` VARCHAR(36) NOT NULL,
+    `imageUrl` VARCHAR(2083),
     `parentId` BIGINT NULL DEFAULT NULL,
     `title` VARCHAR(75) NOT NULL,
     `metaTitle` VARCHAR(100) NULL DEFAULT NULL,
     `slug` VARCHAR(100) NOT NULL,
     `content` TEXT NULL DEFAULT NULL,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`),
+    ADD UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC) VISIBLE
 ) ENGINE = InnoDB CHARSET = utf8; ALTER TABLE
     `shopping_store`.`category` ADD INDEX `idx_category_parent`(`parentId` ASC);
 ALTER TABLE
@@ -120,19 +127,21 @@ ALTER TABLE
 -- Table structure for table `product_category`
 
 CREATE TABLE `shopping_store`.`product_category`(
-    `productId` BIGINT NOT NULL,
+    `productId` BIGINT NOT NULL AUTO_INCREMENT,
     `categoryId` BIGINT NOT NULL,
     PRIMARY KEY(`productId`, `categoryId`),
     INDEX `idx_pc_category`(`categoryId` ASC),
     INDEX `idx_pc_product`(`productId` ASC),
     CONSTRAINT `fk_pc_product` FOREIGN KEY(`productId`) REFERENCES `shopping_store`.`product`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT `fk_pc_category` FOREIGN KEY(`categoryId`) REFERENCES `shopping_store`.`category`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `fk_pc_category` FOREIGN KEY(`categoryId`) REFERENCES `shopping_store`.`category`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC) VISIBLE
 ) ENGINE = InnoDB CHARSET = utf8;
 
 
 -- Dumping data for table `shopping_store`.`stores`
 INSERT INTO `shopping_store`.`stores`(
     `id`,
+    `uuid`,
     `storeName`,
     `imageUrl`,
     `metaTitle`,
@@ -152,6 +161,7 @@ INSERT INTO `shopping_store`.`stores`(
 )
 VALUES(
     '1',
+    '1',
     'Nike',
     'https://en.wikipedia.org/wiki/Swoosh#/media/File:Logo_NIKE.svg',
     NULL,
@@ -168,11 +178,12 @@ VALUES(
     CURRENT_TIMESTAMP,
     'farshad',
     NULL
-)
-    
+);
+
 -- Dumping data for table `shopping_store`.`category`
-INSERT INTO `category`(
+INSERT INTO `shopping_store`.`category`(
     `id`,
+    `uuid`,
     `parentId`,
     `title`,
     `metaTitle`,
@@ -182,17 +193,19 @@ INSERT INTO `category`(
 VALUES(
     '1',
     '1',
+    '1',
     'Womens Trainers',
     NULL,
     'womens_trainers',
     NULL
-)
+);
 
 
 -- Dumping data for table `category`
 
 INSERT INTO `shopping_store`.`product`(
     `id`,
+    `uuid`,
     `storeId`,
     `title`,
     `metaTitle`,
@@ -214,6 +227,7 @@ INSERT INTO `shopping_store`.`product`(
 )
 VALUES(
     '1',
+    'uuid',
     '1',
     'Nike Women Pink Running Shoes',
     NULL,
@@ -234,6 +248,7 @@ VALUES(
     NULL
 ),(
     '2',
+    '2',
     '1',
     'Nike Women Black Basketball Shoes',
     NULL,
@@ -252,6 +267,10 @@ VALUES(
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP,
     NULL
-)
+);
+
+
+INSERT INTO `shopping_store`.`product_category`(`productId`, `categoryId`)
+VALUES('1', '1'),('2', '1');
 
 ```
