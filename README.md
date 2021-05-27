@@ -36,12 +36,13 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+03:00";
 
+
 -- Database: `shopping_store`
 
 CREATE DATABASE shopping_store;
 
--- Table structure for table `stores`
 
+-- Table structure for table `stores`
 
 CREATE TABLE `shopping_store`.`stores`(
     `id` BIGINT NOT NULL,
@@ -80,14 +81,15 @@ CREATE TABLE `shopping_store`.`product` (
   `type` SMALLINT(6) NOT NULL DEFAULT 0,
   `sku` VARCHAR(100) NOT NULL,
   `price` FLOAT NOT NULL DEFAULT 0,
+  `currency` VARCHAR(3) NOT NULL DEFAULT 'iqd',
   `discount` FLOAT NOT NULL DEFAULT 0,
   `quantity` SMALLINT(6) NOT NULL DEFAULT 0,
   `shop` TINYINT(1) NOT NULL DEFAULT 0,
-  `createdAt` DATETIME NOT NULL,
-  `updatedAt` DATETIME NULL DEFAULT NULL,
-  `publishedAt` DATETIME NULL DEFAULT NULL,
-  `startsAt` DATETIME NULL DEFAULT NULL,
-  `endsAt` DATETIME NULL DEFAULT NULL,
+  `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `publishedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `startsAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `endsAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `content` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `uq_slug` (`slug` ASC),
@@ -114,6 +116,7 @@ CREATE TABLE `shopping_store`.`category`(
 ALTER TABLE
     `shopping_store`.`category` ADD CONSTRAINT `fk_category_parent` FOREIGN KEY(`parentId`) REFERENCES `shopping_store`.`category`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+
 -- Table structure for table `product_category`
 
 CREATE TABLE `shopping_store`.`product_category`(
@@ -127,5 +130,128 @@ CREATE TABLE `shopping_store`.`product_category`(
 ) ENGINE = InnoDB CHARSET = utf8;
 
 
--- Dumping data for table `stores`
+-- Dumping data for table `shopping_store`.`stores`
+INSERT INTO `shopping_store`.`stores`(
+    `id`,
+    `storeName`,
+    `imageUrl`,
+    `metaTitle`,
+    `slug`,
+    `mobile`,
+    `street`,
+    `city`,
+    `state`,
+    `zipCode`,
+    `phone`,
+    `email`,
+    `status`,
+    `joinedAt`,
+    `updatedAt`,
+    `createdBy`,
+    `description`
+)
+VALUES(
+    '1',
+    'Nike',
+    'https://en.wikipedia.org/wiki/Swoosh#/media/File:Logo_NIKE.svg',
+    NULL,
+    'nike',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    '0750000000',
+    NULL,
+    '1',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    'farshad',
+    NULL
+)
+    
+-- Dumping data for table `shopping_store`.`category`
+INSERT INTO `category`(
+    `id`,
+    `parentId`,
+    `title`,
+    `metaTitle`,
+    `slug`,
+    `content`
+)
+VALUES(
+    '1',
+    '1',
+    'Womens Trainers',
+    NULL,
+    'womens_trainers',
+    NULL
+)
+
+
+-- Dumping data for table `category`
+
+INSERT INTO `shopping_store`.`product`(
+    `id`,
+    `storeId`,
+    `title`,
+    `metaTitle`,
+    `slug`,
+    `summary`,
+    `type`,
+    `sku`,
+    `price`,
+    `currency`,
+    `discount`,
+    `quantity`,
+    `shop`,
+    `createdAt`,
+    `updatedAt`,
+    `publishedAt`,
+    `startsAt`,
+    `endsAt`,
+    `content`
+)
+VALUES(
+    '1',
+    '1',
+    'Nike Women Pink Running Shoes',
+    NULL,
+    'nike-women-pink-running-shoes',
+    NULL,
+    '0',
+    '123',
+    '25000',
+    'iqd',
+    '0',
+    '0',
+    '0',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    NULL
+),(
+    '2',
+    '1',
+    'Nike Women Black Basketball Shoes',
+    NULL,
+    'nike-women-black-basketball-shoes',
+    NULL,
+    '0',
+    '321',
+    '35000',
+    'iqd',
+    '0',
+    '0',
+    '0',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    NULL
+)
+
 ```
